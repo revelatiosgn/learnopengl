@@ -20,6 +20,9 @@
     <ClInclude Include="Shader.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>src</Filter>
     </ClInclude>

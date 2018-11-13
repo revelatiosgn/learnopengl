@@ -92,3 +92,7 @@ void Shader::setFloat(const string& name, float value)
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
+void Shader::setMat4(const string& name, const glm::mat4& value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}

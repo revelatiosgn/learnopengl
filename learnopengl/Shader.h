@@ -25,6 +25,7 @@ public:
 	void setFloat(const string& name, float value);
 	void setMat4(const string& name, const glm::mat4& value);
 	void setVec3(const string& name, float x, float y, float z);
+	void setVec3(const string& name, const glm::vec3& value);
 
 	GLuint ID;
 };

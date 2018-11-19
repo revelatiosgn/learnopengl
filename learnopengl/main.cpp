@@ -117,7 +117,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		lightingShader.use();
-		lightingShader.setVec3("light.position", lightPos);
+		//lightingShader.setVec3("light.position", lightPos);
+		lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
 		lightingShader.setVec3("viewPos", camera.Position);
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -134,7 +135,19 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, specularMap);
 
 		glBindVertexArray(cubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, cubePositions[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			lightingShader.setMat4("model", model);
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		lampShader.use();
 		lampShader.setMat4("projection", projection);

@@ -97,13 +97,27 @@ int main()
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
-
-	lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-	lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
-	lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-
-	lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
 	lightingShader.setFloat("material.shininess", 32.0f);
+
+	lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+	lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+	lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+	lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+
+	for (auto i = 0; i < 4; i++)
+	{
+		stringstream ss;
+		ss << "pointLights[" << i << "].";
+		string light = ss.str();
+
+		lightingShader.setVec3(light + "position", pointLightPositions[i]);
+		lightingShader.setVec3(light + "ambient", 0.05f, 0.05f, 0.05f);
+		lightingShader.setVec3(light + "diffuse", 0.8f, 0.8f, 0.8f);
+		lightingShader.setVec3(light + "specular", 1.0f, 1.0f, 1.0f);
+		lightingShader.setFloat(light + "constant", 1.0f);
+		lightingShader.setFloat(light + "linear", 0.09f);
+		lightingShader.setFloat(light + "quadratic", 0.032f);
+	}
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -117,16 +131,12 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		lightingShader.use();
-		lightingShader.setVec3("light.position", camera.Position);
-		lightingShader.setVec3("light.direction", camera.Front);
-		lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.0f)));
-		lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+		//lightingShader.setVec3("light.position", camera.Position);
+		//lightingShader.setVec3("light.direction", camera.Front);
+		//lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.0f)));
+		//lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
 		lightingShader.setVec3("viewPos", camera.Position);
-
-		lightingShader.setFloat("light.constant", 1.0f);
-		lightingShader.setFloat("light.linear", 0.09f);
-		lightingShader.setFloat("light.quadratic", 0.032f);
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();

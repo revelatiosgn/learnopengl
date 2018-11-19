@@ -103,7 +103,7 @@ int main()
 	lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 	lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-	lightingShader.setFloat("material.shininess", 64.0f);
+	lightingShader.setFloat("material.shininess", 32.0f);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -117,9 +117,16 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		lightingShader.use();
-		//lightingShader.setVec3("light.position", lightPos);
-		lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+		lightingShader.setVec3("light.position", camera.Position);
+		lightingShader.setVec3("light.direction", camera.Front);
+		lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.0f)));
+		lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+
 		lightingShader.setVec3("viewPos", camera.Position);
+
+		lightingShader.setFloat("light.constant", 1.0f);
+		lightingShader.setFloat("light.linear", 0.09f);
+		lightingShader.setFloat("light.quadratic", 0.032f);
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
@@ -146,8 +153,6 @@ int main()
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
-
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		lampShader.use();
 		lampShader.setMat4("projection", projection);
@@ -185,6 +190,10 @@ void processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		camera.ProcessKeyboard(UP, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+		camera.ProcessKeyboard(DOWN, deltaTime);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

@@ -59,10 +59,17 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		vec.z = mesh->mVertices[i].z;
 		vertex.Position = vec;
 
-		vec.x = mesh->mNormals[i].x;
-		vec.y = mesh->mNormals[i].y;
-		vec.z = mesh->mNormals[i].z;
-		vertex.Normal = vec;
+		if (mesh->mNormals)
+		{
+			vec.x = mesh->mNormals[i].x;
+			vec.y = mesh->mNormals[i].y;
+			vec.z = mesh->mNormals[i].z;
+			vertex.Normal = vec;
+		}
+		else
+		{
+			vertex.Normal = glm::vec3(0.0f);
+		}
 
 		if (mesh->mTextureCoords[0])
 		{
@@ -90,7 +97,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-		vector<Texture> diffuseMap = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		vector<Texture> diffuseMap = loadMaterialTextures(material, aiTextureType_UNKNOWN, "texture_diffuse");
+		//vector<Texture> diffuseMap = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMap.begin(), diffuseMap.end());
 
 		vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");

@@ -39,10 +39,13 @@ struct Material
 };
   
 uniform vec3 viewPos;
+uniform vec3 viewDir;
+uniform vec3 spotLight;
 uniform Material material;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec3 CalcSpotLight(vec3 light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {

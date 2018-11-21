@@ -39,6 +39,12 @@
     <ClCompile Include="imgui\imgui_impl_opengl3.cpp">
       <Filter>src\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -76,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="imgui\imgui_impl_opengl3.h">
       <Filter>src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

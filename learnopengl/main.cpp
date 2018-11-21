@@ -62,7 +62,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	Shader shader("../shaders/model_loading.vsh", "../shaders/model_loading.fsh");
-	Model nanosuit("../models/Medieval_House/Medieval_House.obj");
+	Model nanosuit("../models/WoodenCabinObj/WoodenCabinObj.obj");
 
 
 	while (!glfwWindowShouldClose(window))
@@ -77,7 +77,7 @@ int main()
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.0001f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 
 		shader.use();
@@ -85,7 +85,7 @@ int main()
 		shader.setMat4("view", view);
 
 		glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
+		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 5.0f)); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(0.002f, 0.002f, 0.002f));	// it's a bit too big for our scene, so scale it down
 		//model = glm::rotate(model, -3.1415f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		shader.setMat4("model", model);
